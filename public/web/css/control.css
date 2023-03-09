@@ -1,0 +1,85 @@
+body {
+  background-color: cornsilk;
+}
+
+main {
+  margin: 5rem auto;
+  padding: 2rem;
+  border-radius: 1rem;
+  /* box-shadow: ; */
+  /* width: max(); */
+  width: 75vw;
+  background-color: #222;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+h4 {
+  font-size: 1.25rem;
+}
+
+button {
+  /* background-color: #222; */
+  /* border-color: cornsilk; */
+  background-color: cornsilk;
+  color: #222;
+  /* border-style: solid; */
+  border-radius: 1rem;
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+main > section > * {
+  margin: 0.5rem 0;
+}
+main > section > h3 {
+  /* margin-bottom: 0.5rem; */
+  /* margin: 1rem 0; */
+  margin-top: 1rem;
+}
+
+.sparator {
+  width: 100%;
+  height: max-content;
+
+  border-color: cornsilk;
+  border-width: 1px;
+  border-style: solid;
+  margin: 1rem 0;
+}
+
+.sparatordot {
+  width: 100%;
+  height: max-content;
+
+  border-color: cornsilk;
+  border-width: 1px;
+  border-style: dotted;
+  margin: 1rem 0;
+}
+
+.changeImage {
+  padding: 1rem;
+  background-color: cornsilk;
+  border-radius: 1rem;
+  color: #222;
+}
+
+.second-minute-hour {
+  padding: 1rem;
+  background-color: cornsilk;
+  border-radius: 1rem;
+  color: #222;
+}
+
+.second-minute-hour > option {
+  font-size: 0.75rem;
+  background-color: cornsilk;
+  border-radius: 1rem;
+  color: #222;
+}
