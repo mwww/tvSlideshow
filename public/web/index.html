@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TV Slideshow</title>
+
+    <!-- <link rel="stylesheet" href="/public/web/css/index.css" /> -->
+    <!-- <link
+      rel="stylesheet"
+      href="http://127.0.0.1:5500/public/web/css/index.css"
+    /> -->
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/index.css" />
+
+    <script src="/js/datetime.js" defer></script>
+
+    <!-- socket.io -->
+    <script
+      src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+      integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/configurator.js"></script>
+    <!-- <script>
+      // import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
+      // const {
+      //   io,
+      // } = require('https://cdn.socket.io/4.3.2/socket.io.esm.min.js');
+
+      const socket = io();
+      // const socket = io('ws://127.0.0.1:3000');
+
+      socket.on('connect', () => {
+        console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      });
+
+      socket.on('from server', (...args) => {
+        console.log(args.join(' '));
+        // ...
+      });
+
+      socket.on('reload now', () => {
+        window.location.reload();
+      });
+    </script>
+    <script>
+      socket.emit('client');
+      socket.emit('client active');
+    </script> -->
+  </head>
+  <body>
+    <main>
+      <!-- <div class="clockdate">
+        <div class="clk" id="clk">
+          <span class="hour" name="hour">00</span>
+          <span>&#58;</span>
+          <span class="minute">01</span>
+          <div>
+            <span class="second">10</span>
+            <span class="milisecond">69</span>
+          </div>
+        </div>
+        <div id="daydate" class="daydate">
+          <span class="day">Wednesday</span>
+          <span class="date">8</span>
+          <span class="month">March</span>
+          <span class="year">2023</span>
+        </div>
+      </div>
+      <div class="bgpic" id="bgpic"></div> -->
+      <div class="clockdate">
+        <div class="clk" id="clk">
+          <span class="hour" name="hour"></span>
+          <span>&#58;</span>
+          <span class="minute"></span>
+          <div>
+            <span class="second"></span>
+            <span class="milisecond"></span>
+          </div>
+        </div>
+        <div id="daydate" class="daydate">
+          <span class="day"></span>
+          <span class="date"></span>
+          <span class="month"></span>
+          <span class="year"></span>
+        </div>
+      </div>
+      <div class="bgpic" id="bgpic"></div>
+    </main>
+  </body>
+</html>
