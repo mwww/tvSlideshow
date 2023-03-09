@@ -1,0 +1,26 @@
+{
+  "name": "tvslideshow",
+  "version": "0.0.1",
+  "description": "a simple webapp that can used as idle screen showing slideshow from photos on server.",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mwww/tvSlideshow.git"
+  },
+  "author": "mwww",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/mwww/tvSlideshow/issues"
+  },
+  "homepage": "https://github.com/mwww/tvSlideshow#readme",
+  "dependencies": {
+    "socket.io": "^4.6.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.7",
+    "utf-8-validate": "^6.0.3"
+  }
+}
