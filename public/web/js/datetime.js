@@ -38,7 +38,6 @@ const secondEl = clockEl.children[3].children[0];
 const milisecondEl = clockEl.children[3].children[1];
 
 const setDateTime = setInterval(function () {
-  // method to be executed;
   var d = new Date();
   currentTime = {
     Hour: String(d.getHours()).padStart(2, '0'),
@@ -61,23 +60,7 @@ const setDateTime = setInterval(function () {
     yearEl.innerText = currentDate.Year;
   }
 
-  //   if (currentTime.milisecond.length >= 3) {
-  //     console.log(currentTime.milisecond);
-  //     console.log(d.getMilliseconds());
-  //     clearInterval(setClock);
-  //   } else if (currentTime.milisecond.length <= 1) {
-  //     console.log(currentTime.milisecond);
-  //     console.log(d.getMilliseconds());
-  //     clearInterval(setClock);
-  //   } else if (d.getMilliseconds() >= 990) {
-  //     console.log(currentTime.milisecond);
-  //     console.log(d.getMilliseconds());
-  //     clearInterval(setClock);
-  //   }
-
   hourEl.innerText = currentTime.Hour;
   minuteEl.innerText = currentTime.Minute;
   secondEl.innerText = currentTime.Second;
-  milisecondEl.innerText = currentTime.Milisecond;
 }, 50);
-// clearInterval(setDateTime); // thanks @Luca D'Amico
