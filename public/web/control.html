@@ -15,50 +15,21 @@
       integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
       crossorigin="anonymous"
     ></script>
-    <script>
-      const socket = io();
-
-      socket.on('connect', () => {
-        console.log(socket.id);
-      });
-
-      socket.emit('this is controler');
-      socket.emit('controler active');
-
-      socket.on('from server', (...args) => {
-        console.log(args.join(' '));
-      });
-
-      socket.on('reload now', () => {
-        window.location.reload();
-      });
-    </script>
+    <script src="/js/controller.js" defer></script>
   </head>
   <body>
-    <!-- <header>
-      <h1>Config</h1>
-    </header> -->
     <main>
-      <h1>Controlerrr</h1>
+      <h1>Controller</h1>
       <div class="sparator"></div>
       <section>
         <h3>Background Image Control</h3>
         <div class="sparatordot"></div>
-        <!-- <button>Set Background Image</button> -->
-        <!-- <button>Preious Image</button>
-        <button>Next Image</button> -->
-        <button>Random Image</button>
-        <button>Solid Black Background</button>
-
-        <!-- <h4>Randomize Image</h4>
-        <input type="radio" id="Yes" name="fav_language" value="Yes" />
-        <label for="Yes">Yes</label><br />
-        <input type="radio" id="No" name="fav_language" value="No" />
-        <label for="No">No</label><br /> -->
+        <button id="randomImg">Random Image</button>
+        <button id="solidBlack">Solid Black Background</button>
 
         <br />
 
-        <label for="changeImage">Change Image per (1-60 minute): </label>
+        <label for="changeImage">Change Image per </label>
 
         <input
           type="number"
@@ -66,7 +37,6 @@
           name="changeImage"
           class="changeImage"
           min="1"
-          max="60"
         />
 
         <select
@@ -75,9 +45,9 @@
           id="second-minute-hour"
           class="second-minute-hour"
         >
-          <option value="Second">Second</option>
-          <option value="Minute">Minute</option>
-          <option value="Hour">Hour</option>
+          <option value="Second">Seconds</option>
+          <option value="Minute">Minutes</option>
+          <option value="Hour">Hours</option>
         </select>
       </section>
     </main>
