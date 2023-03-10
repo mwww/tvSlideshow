@@ -3,6 +3,10 @@ main {
   height: 100vh;
 }
 
+.hiddenImgs {
+  display: none;
+}
+
 .bgpic::after {
   content: '';
   position: absolute;
@@ -22,10 +26,12 @@ main {
   min-width: 100vw;
   min-height: 100vh;
   /* background-image: url(http://127.0.0.1:5500/public/assets/slideshow/1.jpg); */
-  background-image: url(/media/1.jpg);
+  /* background-image: url(/media/1.jpg); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
+  transition: background-image ease 1s;
 }
 .clockdate {
   position: absolute;
@@ -42,8 +48,8 @@ main {
 
   justify-content: end;
 
-  padding-bottom: 1.5rem;
-  padding-left: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
   /* padding: 1rem; */
 }
 
@@ -61,4 +67,8 @@ main {
 .milisecond,
 .daydate > * {
   font-size: 2.25rem;
+}
+
+.second {
+  font-size: 5rem;
 }
