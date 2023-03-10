@@ -1,11 +1,6 @@
-// import { Server } from 'socket.io';
-// const Server = require('socket.io');
-
 const { createServer } = require('http');
 const { Server } = require('socket.io');
 const fs = require('fs').promises;
-
-// const io = new Server(3000);
 
 // ------------------
 // === http stuff ===
@@ -46,173 +41,111 @@ function resRetFile(res, path, contentType = '-') {
 const httpReq = (req, res) => {
   let requrl = String(req.url)
     .split('/')
-    .filter((item) => item); // remove empty entry
-  // console.log(req.url, requrl);
-  // console.log(req.socket.remoteAddress);
+    .filter((item) => item);
   let reqIP = req.socket.remoteAddress;
   const logger = (...messages) => {
     console.log(`[ ${reqIP} ] ${messages.join(' ')}`);
   };
-  // console.log(requrl);
   logger(req.url);
 
-  switch (requrl[0]) {
-    case undefined:
-      // =============
-      // index handler
-      // =============
-      // logger('index');
-      resRetFile(res, '/public/web/index.html', 'text/html');
-      break;
-    case 'control':
-      // ==============
-      // config handler
-      // ==============
-      // logger('config');
-      resRetFile(res, '/public/web/control.html', 'text/html');
-      break;
-    case 'css':
-      // ===========
-      // css handler
-      // ===========
-      // logger('css');
-      switch (requrl[1]) {
-        case 'base.css':
-          resRetFile(res, '/public/web/css/base.css', 'text/css');
+  switch (req.method) {
+    case 'GET':
+      switch (requrl[0]) {
+        case undefined:
+          // =============
+          // index handler
+          // =============
+          resRetFile(res, '/public/web/index.html', 'text/html');
           break;
-        case 'index.css':
-          resRetFile(res, '/public/web/css/index.css', 'text/css');
+        case 'control':
+          // ==============
+          // config handler
+          // ==============
+          resRetFile(res, '/public/web/control.html', 'text/html');
           break;
-        case 'control.css':
-          resRetFile(res, '/public/web/css/control.css', 'text/css');
+        case 'css':
+          // ===========
+          // css handler
+          // ===========
+          switch (requrl[1]) {
+            case 'base.css':
+              resRetFile(res, '/public/web/css/base.css', 'text/css');
+              break;
+            case 'index.css':
+              resRetFile(res, '/public/web/css/index.css', 'text/css');
+              break;
+            case 'control.css':
+              resRetFile(res, '/public/web/css/control.css', 'text/css');
+              break;
+            default:
+              res404(res);
+          }
+          break;
+        case 'js':
+          // ==========
+          // js handler
+          // ==========
+          switch (requrl[1]) {
+            case 'datetime.js':
+              resRetFile(res, '/public/web/js/datetime.js', 'text/javascript');
+              break;
+            case 'configurator.js':
+              resRetFile(
+                res,
+                '/public/web/js/configurator.js',
+                'text/javascript'
+              );
+              break;
+            case 'controller.js':
+              resRetFile(
+                res,
+                '/public/web/js/controller.js',
+                'text/javascript'
+              );
+              break;
+            default:
+              res404(res);
+          }
+          break;
+        case 'media':
+          switch (requrl[1]) {
+            case 'slideshow':
+              resRetFile(res, `/public/assets/slideshow/${requrl[2]}`);
+              break;
+            default:
+              res404(res);
+          }
+          break;
+        case 'api':
+          switch (requrl[1]) {
+            case 'config':
+              resRetFile(res, '/clientConfig.json');
+              break;
+            case 'getAllImgs':
+              // resRetFile(res, '/clientConfig.json');
+              fs.readdir(__dirname + '/public/assets/slideshow/')
+                .then((files) => {
+                  res.writeHead(200);
+                  res.end(JSON.stringify({ imgs: files }));
+                })
+                .catch((err) => {
+                  console.error('err', err);
+                });
+              break;
+            default:
+              break;
+          }
           break;
         default:
+          logger(req.url, '404');
           res404(res);
       }
       break;
-    case 'js':
-      // ==========
-      // js handler
-      // ==========
-      // logger('js');
-      switch (requrl[1]) {
-        case 'datetime.js':
-          resRetFile(res, '/public/web/js/datetime.js', 'text/javascript');
-          break;
-        case 'configurator.js':
-          resRetFile(res, '/public/web/js/configurator.js', 'text/javascript');
-          break;
-        default:
-          res404(res);
-      }
-      break;
-    case 'media':
-      // =============
-      // media handler
-      // =============
-      // logger('media');
-
-      switch (requrl[1]) {
-        case '1.jpg':
-          resRetFile(res, '/public/assets/slideshow/1.jpg');
-          break;
-        default:
-          res404(res);
-      }
-      break;
-    default:
-      logger(req.url, '404');
+    case 'POST':
       res404(res);
+    default:
+      break;
   }
-
-  // if (requrl[0] == undefined) {
-  //   // ============
-  //   // html handler
-  //   // ============
-  //   console.log('html');
-
-  //   resRetFile(res, '/public/web/index.html', 'text/html');
-  // } else if (requrl[0] == 'config') {
-  //   // ==============
-  //   // config handler
-  //   // ==============
-  //   console.log('css');
-  //   resRetFile(res, '/public/web/config.html', 'text/html');
-  // } else if (requrl[0] == 'css') {
-  //   // ===========
-  //   // css handler
-  //   // ===========
-  //   console.log('css');
-
-  //   switch (requrl[1]) {
-  //     case 'index.css':
-  //       resRetFile(res, '/public/web/css/index.css', 'text/css');
-  //       break;
-  //     case 'base.css':
-  //       resRetFile(res, '/public/web/css/base.css', 'text/css');
-  //     default:
-  //       break;
-  //   }
-  // } else if (requrl[0] == 'js') {
-  //   // ==========
-  //   // js handler
-  //   // ==========
-  //   console.log('js');
-
-  //   switch (requrl[1]) {
-  //     case 'datetime.js':
-  //       resRetFile(res, '/public/web/js/datetime.js', 'texy/js');
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-  // } else if (requrl[0] == 'media') {
-  //   // =============
-  //   // media handler
-  //   // =============
-  //   console.log('media');
-
-  //   switch (requrl[1]) {
-  //     case '1.jpg':
-  //       resRetFile(res, '/public/assets/slideshow/1.jpg');
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-  // } else {
-  //   console.log('404');
-  //   res.setHeader('Content-Type', 'text/html');
-  //   res.writeHead(404);
-  //   res.end(
-  //     `<html><body><h1>Damn, that page is somehow missing!</h1></body></html>`
-  //   );
-  // }
-
-  //   switch (req.url) {
-  //     case '/':
-  //       fs.readFile(__dirname + '/public/web/index.html')
-  //         .then((contents) => {
-  //           res.setHeader('Content-Type', 'text/html');
-  //           res.writeHead(200);
-  //           res.end(contents);
-  //         })
-  //         .catch((err) => {
-  //           res.writeHead(500);
-  //           res.end(err);
-  //           return;
-  //         });
-  //       break;
-  //     case '/css':
-  //       console.log();
-  //     default:
-  //       res.setHeader('Content-Type', 'text/html');
-  //       res.writeHead(404);
-  //       res.end(
-  //         `<html><body><h1>Damn, that page is somehow missing!</h1></body></html>`
-  //       );
-  //   }
 };
 
 const httpServer = createServer(httpReq);
@@ -226,26 +159,21 @@ httpServer.listen(port, () => {
 // === socket stuff ===
 // --------------------
 
-const io = new Server(httpServer, {
-  /* options */
-});
+const io = new Server(httpServer);
 
 let reloaded = [];
 
 let clients = [];
 let controlers = [];
 
+let clientsRandomImage = {};
+
 io.on('connection', (socket) => {
-  // console.log(
-  //   `[ socket ] new connection from ${socket.handshake.address} with ID ${socket.id}`
-  // );
   const logger = (message) => {
     console.log(`[ ${socket.id} ] ${message}`);
   };
 
   logger(`connected from ${socket.handshake.address}`);
-  // send a message to the client
-  // socket.emit('hello from server', 1, '2', { 3: Buffer.from([4]) });
   if (!reloaded.includes(socket.handshake.address)) {
     socket.emit('reload now');
     reloaded.push(socket.handshake.address);
@@ -253,6 +181,8 @@ io.on('connection', (socket) => {
 
   socket.on('this is client', () => {
     clients.push(socket.id);
+    clientsRandomImage[socket.id] = { imgs: [] };
+    socket.emit('ctrl cmd', 'new config');
     console.log('clients', clients);
   });
   socket.on('this is controler', () => {
@@ -266,18 +196,97 @@ io.on('connection', (socket) => {
     });
   });
   socket.on('controler active', () => {
-    controlers.forEach((controler) => {
-      io.to(clients).emit('from server', `${socket.id} active`);
+    clients.forEach((client) => {
+      io.to(client).emit('from server', `${socket.id} active`);
     });
   });
 
-  // receive a message from the client
+  socket.on('random img', () => {
+    setTimeout(() => {
+      fs.readdir(__dirname + '/public/assets/slideshow/')
+        .then((files) => {
+          let randomimg;
+          let imgsList = clientsRandomImage[socket.id].imgs;
+          let filesLen = files.length;
+          let loops = 0;
+          let maxLoops = 10;
+          while (true) {
+            randomimg = Math.floor(Math.random() * filesLen) + 1;
+            let slices =
+              filesLen == 2 || filesLen == 3
+                ? -1
+                : filesLen == 4
+                ? -2
+                : filesLen > 4 && filesLen <= 6
+                ? -3
+                : filesLen > 6
+                ? -5
+                : 1;
+            imgsList = imgsList.slice(slices);
+            if (!imgsList.includes(randomimg)) {
+              break;
+            }
+            loops++;
+            if (loops >= maxLoops) {
+              break;
+            }
+          }
+          socket.emit('res new img', `/media/slideshow/${randomimg}.jpg`);
+          clientsRandomImage[socket.id].imgs.push(randomimg);
+        })
+        .catch((err) => {
+          console.error('err', err);
+        });
+    }, 500);
+  });
+
+  socket.on('ctrl', (cmd) => {
+    switch (cmd.cmd) {
+      case 'imageChange':
+        let configFile;
+        fs.readFile(__dirname + '/clientConfig.json')
+          .then((content) => {
+            configFile = JSON.parse(content);
+            logger(content);
+
+            configFile.imageChange = cmd.arg;
+            clients.forEach((client) => {
+              io.to(client).emit('ctrl cmd', 'new config');
+            });
+
+            fs.writeFile(
+              __dirname + '/clientConfig.json',
+              JSON.stringify(configFile),
+              'utf8'
+            )
+              .then(() => {
+                logger('config saved successfully!');
+              })
+              .catch((err) => {
+                logger(err);
+              });
+          })
+          .catch((err) => {
+            logger(err);
+          });
+        break;
+      case 'randomImg':
+        clients.forEach((client) => {
+          io.to(client).emit('ctrl cmd', 'randomImg');
+        });
+        break;
+      case 'solidBlack':
+        clients.forEach((client) => {
+          io.to(client).emit('ctrl cmd', 'solidBlack');
+        });
+        break;
+
+      default:
+        break;
+    }
+  });
+
   socket.on('hello from client', (...args) => {
     logger(args);
-    // ...
   });
 });
-
-// io.on('connection', (socket) => {
-//   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-// });
