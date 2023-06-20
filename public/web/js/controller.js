@@ -17,6 +17,7 @@ function configChange(val) {
   return val;
 }
 
+// kak rizal: pake debounce
 changeImageInputEl.addEventListener('change', (e) => {
   console.log(e.target.value);
 
@@ -26,15 +27,14 @@ changeImageInputEl.addEventListener('change', (e) => {
   });
 });
 
-changeImageSelectEl,
-  addEventListener('change', (e) => {
-    console.log(e);
+changeImageSelectEl.addEventListener('change', (e) => {
+  console.log(e);
 
-    socket.emit('ctrl', {
-      cmd: 'imageChange',
-      arg: configChange(changeImageInputEl.value),
-    });
+  socket.emit('ctrl', {
+    cmd: 'imageChange',
+    arg: configChange(changeImageInputEl.value),
   });
+});
 
 function configApplier(config) {
   for (let key in config) {
